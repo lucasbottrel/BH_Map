@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>Exercicio Engenharia de Software II</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <script src="https://js.arcgis.com/4.19/"></script>
+    <script>
+      require([
+        "esri/WebMap",
+        "esri/views/MapView",
+        "esri/widgets/Bookmarks",
+        "esri/widgets/Expand",
+        "esri/widgets/BasemapGallery",
+        "esri/widgets/Compass",
+        "esri/widgets/Editor"
+      ], function(
+        WebMap, MapView, Bookmarks, Expand, BasemapGallery, Compass, Editor
+      ) {
+        const webmap = new WebMap({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "c6644f15b35f428cb7c24f486ee988db"
+          }
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: webmap
+        });
+
+        const bookmarks = new Bookmarks({
+          view: view,
+          // allows bookmarks to be added, edited, or deleted
+          editingEnabled: true
+        });
+
+        const bkExpand = new Expand({
+          view: view,
+          content: bookmarks,
+          expanded: true
+        })
+
+        var basemapGallery = new BasemapGallery({
+            view: view
+        });
+
+        let compass = new Compass({
+            view: view
+        });
+
+        // At the very minimum, set the Editor's view
+        const editor = new Editor({
+            view: view
+        });
+
+        view.ui.add(editor, "bottom-left");
+
+        // Add the widget to the top-right corner of the view
+        view.ui.add(bkExpand, "top-right");
+        // Add the widget to the top-right corner of the view
+        view.ui.add(basemapGallery, {
+          position: "bottom-right"
+        });
+        view.ui.add(compass, "top-left");
+
+        // bonus - how many bookmarks in the webmap?
+        webmap.when(function() {
+          if (webmap.bookmarks && webmap.bookmarks.length) {
+            console.log("Bookmarks: ", webmap.bookmarks.length);
+          } else {
+            console.log("No bookmarks in this webmap.");
+          }
+        });
+      });
+	  
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
