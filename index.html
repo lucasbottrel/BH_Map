@@ -1,9 +1,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1,user-scalable=no"
+    />
     <title>Exercicio Engenharia de Software II</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.19/esri/themes/light/main.css"
+    />
     <style>
       html,
       body,
@@ -23,46 +29,58 @@
         "esri/widgets/Expand",
         "esri/widgets/BasemapGallery",
         "esri/widgets/Compass",
-        "esri/widgets/Editor"
-      ], function(
-        WebMap, MapView, Bookmarks, Expand, BasemapGallery, Compass, Editor
+        "esri/widgets/Editor",
+        "esri/widgets/Fullscreen",
+      ], function (
+        WebMap,
+        MapView,
+        Bookmarks,
+        Expand,
+        BasemapGallery,
+        Compass,
+        Fullscreen
       ) {
         const webmap = new WebMap({
           portalItem: {
             // autocasts as new PortalItem()
-            id: "c6644f15b35f428cb7c24f486ee988db"
-          }
+            id: "c6644f15b35f428cb7c24f486ee988db",
+          },
         });
 
         const view = new MapView({
           container: "viewDiv",
-          map: webmap
+          map: webmap,
         });
 
         const bookmarks = new Bookmarks({
           view: view,
           // allows bookmarks to be added, edited, or deleted
-          editingEnabled: true
+          editingEnabled: true,
         });
 
         const bkExpand = new Expand({
           view: view,
           content: bookmarks,
-          expanded: true
-        })
+          expanded: true,
+        });
 
         var basemapGallery = new BasemapGallery({
-            view: view
+          view: view,
         });
 
         let compass = new Compass({
-            view: view
+          view: view,
         });
 
         // At the very minimum, set the Editor's view
         const editor = new Editor({
-            view: view
+          view: view,
         });
+
+        fullscreen = new Fullscreen({
+          view: view,
+        });
+        view.ui.add(fullscreen, "top-right");
 
         view.ui.add(editor, "bottom-left");
 
@@ -70,12 +88,12 @@
         view.ui.add(bkExpand, "top-right");
         // Add the widget to the top-right corner of the view
         view.ui.add(basemapGallery, {
-          position: "bottom-right"
+          position: "bottom-right",
         });
         view.ui.add(compass, "top-left");
 
         // bonus - how many bookmarks in the webmap?
-        webmap.when(function() {
+        webmap.when(function () {
           if (webmap.bookmarks && webmap.bookmarks.length) {
             console.log("Bookmarks: ", webmap.bookmarks.length);
           } else {
@@ -83,9 +101,9 @@
           }
         });
       });
-	  
     </script>
   </head>
+
   <body>
     <div id="viewDiv"></div>
   </body>
