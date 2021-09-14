@@ -30,7 +30,7 @@
         "esri/widgets/BasemapGallery",
         "esri/widgets/Compass",
         "esri/widgets/Editor",
-        "esri/widgets/Fullscreen",
+        "esri/widgets/BasemapLayerList",
       ], function (
         WebMap,
         MapView,
@@ -38,7 +38,8 @@
         Expand,
         BasemapGallery,
         Compass,
-        Fullscreen
+        Editor,
+        BasemapLayerList
       ) {
         const webmap = new WebMap({
           portalItem: {
@@ -56,6 +57,10 @@
           view: view,
           // allows bookmarks to be added, edited, or deleted
           editingEnabled: true,
+        });
+
+        let basemapLayerList = new BasemapLayerList({
+          view: view,
         });
 
         const bkExpand = new Expand({
@@ -77,11 +82,6 @@
           view: view,
         });
 
-        fullscreen = new Fullscreen({
-          view: view,
-        });
-        view.ui.add(fullscreen, "top-right");
-
         view.ui.add(editor, "bottom-left");
 
         // Add the widget to the top-right corner of the view
@@ -91,6 +91,9 @@
           position: "bottom-right",
         });
         view.ui.add(compass, "top-left");
+        view.ui.add(basemapLayerList, {
+          position: "top-left",
+        });
 
         // bonus - how many bookmarks in the webmap?
         webmap.when(function () {
